@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./js/echarts.js"></script>
+    <script src="./js/jquery-3.6.0.js"></script>
+</head>
+<body>
+    <div id="data" style="height: 500px;"></div>
+</body>
+</html>
+<script>
+    // var dataPic = echarts.init(document.getElementById('data'));
+    // dataPic.setOption({
+    //     title:{text: "气温变化表"},
+    //     color: 'red',
+    //     legend: {data:['温度']},    //图例
+    //     tooltip: {
+    //         trigger: 'axis',
+    //         axisPointer: {
+    //             type: 'cross',
+    //             label: {
+    //                 backgroundColor: 'green',
+    //             }
+    //         }
+    //     },
+    //     xAxis: {data: [],name: '时'},
+    //     yAxis: [{
+    //         type: 'value',
+    //         min: 0,
+    //         max: 30,
+    //         name: '温度',
+    //         axisLabel: {
+    //             formatter: '{value}℃'
+    //         }
+    //     }],
+    //     series:[{
+    //         name: '温度',
+    //         type: 'line',    //直线
+    //         symbol: 'circle',   //连接用标志是园点
+    //         symbolSize: 10,
+    //         data: [],
+    //     }],
+ 
+    // });
+    var dataPic = echarts.init(document.getElementById('data'));
+    dataPic.setOption({
+        title:{text: "气温变化表"},
+        color: 'red',
+        //图例
+        legend: {
+            data:['温度','温度1'],
+        }, 
+        //提示条
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                label: {
+                    backgroundColor: 'green',
+                }
+            }
+        },
+        //x轴
+        xAxis: {data: [],name: '时'},
+        //y轴
+        yAxis: [{
+            type: 'value',
+            min: 0,
+            max: 30,
+            name: '温度',
+            axisLabel: {
+                formatter: '{value}℃'
+            }
+        }],
+        series:
+        //1线
+        [{
+            name: '温度1',
+            type: 'line',    //直线
+            symbol: 'circle',   //连接用标志是园点
+            symbolSize: 10,
+            data: []
+        },
+        //2线
+        {
+            name: '温度',
+            type: 'line',    //直线
+            symbol: 'circle',   //连接用标志是园点
+            symbolSize: 10,
+            data: [],
+            color: 'green',
+        }
+    ],
+        
+ });
+    $.get('./data/data.json',function(data) {
+        dataPic.setOption({
+            xAxis: {data: data.hour},
+            series: [{data: data.c},{data: data.c1}],
+        });
+    });
+
+</script>
